@@ -1,407 +1,248 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Divaz Value 💄</title>
-<style>
-:root {
-  --bg-main: #0a0d14;
-  --bg-card: rgba(22, 28, 42, 0.75);
-  --bg-slot: #121722;
-  --border-color: rgba(255, 255, 255, 0.08);
-  --border-focus: #6366f1;
-  --text-main: #f8fafc;
-  --text-muted: #94a3b8;
-  --accent-purple: #6366f1;
-  --accent-purple-glow: rgba(99, 102, 241, 0.35);
-  --accent-red: #ef4444;
-  --accent-green: #10b981;
-  --accent-gold: #f59e0b;
-  --radius-lg: 14px;
-  --radius-md: 8px;
-}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Divaz Value 💄</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 
-* { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-body { background: var(--bg-main); color: var(--text-main); line-height: 1.5; max-width: 480px; margin: 0 auto; min-height: 100vh; padding: 16px; position: relative; }
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        body { background-color: #0d1117; color: #ffffff; padding: 12px; max-width: 600px; margin: 0 auto; }
 
-/* Custom Scrollbar */
-::-webkit-scrollbar { width: 4px; height: 4px; }
-::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+        .navbar { display: flex; justify-content: space-between; align-items: center; padding-bottom: 12px; }
+        .brand { font-size: 1.1rem; font-weight: 700; display: flex; align-items: center; gap: 6px; }
+        .menu-btn { background: none; border: none; color: #9eacba; font-size: 1.4rem; cursor: pointer; }
 
-/* Header & Status */
-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
-.brand-logo { font-size: 18px; font-weight: 800; letter-spacing: -0.5px; background: linear-gradient(135deg, #fff, var(--text-muted)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-.status-tag { display: inline-flex; align-items: center; gap: 6px; background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.2); color: var(--accent-green); padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; margin-bottom: 16px; }
-.pulse-dot { width: 6px; height: 6px; background: var(--accent-green); border-radius: 50%; box-shadow: 0 0 8px var(--accent-green); }
+        .badge-official { display: inline-flex; align-items: center; gap: 6px; background-color: rgba(6, 78, 59, 0.4); border: 1px solid #059669; color: #10b981; font-size: 0.7rem; font-weight: 600; padding: 4px 10px; border-radius: 20px; margin-bottom: 12px; }
+        .dot { width: 6px; height: 6px; background-color: #10b981; border-radius: 50%; }
 
-/* Controls */
-.search-input { width: 100%; padding: 12px 16px; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); color: var(--text-main); font-size: 14px; outline: none; transition: 0.2s; margin-bottom: 14px; backdrop-filter: blur(8px); }
-.search-input:focus { border-color: var(--border-focus); box-shadow: 0 0 12px var(--accent-purple-glow); }
+        .search-box { position: relative; margin-bottom: 12px; }
+        .search-input { width: 100%; background-color: #161b22; border: 1px solid #21262d; border-radius: 12px; padding: 10px 14px; color: #ffffff; font-size: 0.9rem; outline: none; transition: all 0.3s ease; }
+        .search-input:focus { border: 1px solid #6366f1; }
 
-.filter-bar { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; margin-bottom: 20px; scrollbar-width: none; }
-.filter-btn { padding: 8px 16px; border-radius: 20px; border: 1px solid var(--border-color); background: var(--bg-card); color: var(--text-muted); font-size: 13px; font-weight: 600; cursor: pointer; white-space: nowrap; transition: 0.2s; }
-.filter-btn.active { background: var(--accent-purple); color: #fff; border-color: var(--accent-purple); box-shadow: 0 4px 12px var(--accent-purple-glow); }
-.filter-btn.trade-mode { background: rgba(239, 68, 68, 0.15); border-color: rgba(239, 68, 68, 0.3); color: var(--accent-red); }
-.filter-btn.trade-mode:hover { background: var(--accent-red); color: #fff; }
+        .categories { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 10px; margin-bottom: 12px; scrollbar-width: none; }
+        .btn-filter { padding: 6px 14px; border-radius: 20px; border: none; font-size: 0.8rem; font-weight: 600; cursor: pointer; background-color: #161b22; color: #8b949e; transition: 0.3s; white-space: nowrap; }
+        .btn-filter.active-all { background-color: #6366f1; color: #ffffff; }
 
-/* Grid Layout */
-.section-header { font-size: 18px; font-weight: 700; margin-bottom: 14px; }
-.items-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
-.item-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 10px; cursor: pointer; transition: transform 0.2s, border-color 0.2s; backdrop-filter: blur(8px); }
-.item-card:hover { border-color: var(--accent-purple); transform: translateY(-2px); }
-.card-img-wrap { width: 100%; aspect-ratio: 1; border-radius: var(--radius-md); background: var(--bg-slot); overflow: hidden; margin-bottom: 8px; }
-.card-img-wrap img { width: 100%; height: 100%; object-fit: cover; }
-.card-tag { font-size: 9px; font-weight: 700; background: rgba(255, 255, 255, 0.05); color: var(--text-muted); padding: 2px 6px; border-radius: 4px; text-transform: uppercase; display: inline-block; margin-bottom: 4px; }
-.card-title { font-size: 13px; font-weight: 600; margin-bottom: 2px; }
-.card-val { font-size: 12px; font-weight: 700; color: var(--accent-gold); }
+        .section-title { font-size: 1.2rem; font-weight: 700; margin-bottom: 10px; }
+        .item-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+        
+        .item-card { background-color: #161b22; border-radius: 14px; border: 1px solid #21262d; padding: 8px; display: flex; flex-direction: column; position: relative; }
+        .image-box { position: relative; width: 100%; aspect-ratio: 1 / 1; border-radius: 10px; overflow: hidden; margin-bottom: 6px; background-color: #1c2128; display: flex; align-items: center; justify-content: center; }
+        .image-box img { width: 95%; height: 95%; object-fit: contain; }
 
-/* Views (Pages) */
-.view-panel { display: none; position: fixed; inset: 0; background: var(--bg-main); z-index: 100; overflow-y: auto; padding: 16px; opacity: 0; transition: opacity 0.2s ease; }
-.view-panel.active { display: block; opacity: 1; }
-.view-header { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
-.icon-btn { background: none; border: none; color: var(--text-main); font-size: 20px; cursor: pointer; padding: 4px; }
+        .tag { align-self: flex-start; font-size: 0.6rem; font-weight: 700; padding: 2px 6px; border-radius: 6px; background-color: #21262d; color: #8b949e; text-transform: uppercase; margin-bottom: 4px; }
+        .item-name { font-size: 0.85rem; font-weight: 600; margin-bottom: 4px; }
+        .info-row { font-size: 0.75rem; display: flex; gap: 4px; }
+        .val-num { color: #f59e0b; font-weight: 700; }
 
-/* Details View */
-.detail-preview { width: 100%; aspect-ratio: 1; border-radius: var(--radius-lg); background: var(--bg-slot); overflow: hidden; margin-bottom: 16px; border: 1px solid var(--border-color); }
-.detail-preview img { width: 100%; height: 100%; object-fit: cover; }
-.detail-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 16px; margin-bottom: 16px; }
-.detail-card h2 { font-size: 18px; margin-bottom: 6px; }
-.detail-card .price { font-size: 16px; font-weight: 700; color: var(--accent-gold); }
+        .btn-plus { position: absolute; bottom: 8px; right: 8px; width: 28px; height: 28px; border-radius: 8px; background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.15); color: #fff; display: flex; align-items: center; justify-content: center; cursor: pointer; backdrop-filter: blur(4px); }
+        .btn-plus:hover { background: #6366f1; }
 
-/* Comments */
-.comments-box { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 16px; }
-.comments-box h3 { font-size: 14px; font-weight: 700; margin-bottom: 12px; }
-.comment-form { display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px; }
-.form-input { width: 100%; padding: 10px; background: var(--bg-slot); border: 1px solid var(--border-color); border-radius: var(--radius-md); color: var(--text-main); font-size: 13px; outline: none; }
-.btn-submit { padding: 10px; background: var(--accent-purple); border: none; border-radius: var(--radius-md); color: #fff; font-weight: 600; cursor: pointer; transition: 0.2s; }
-.btn-submit:disabled { opacity: 0.5; cursor: not-allowed; }
-
-.cooldown-info { font-size: 12px; color: var(--accent-gold); margin-bottom: 12px; display: none; align-items: center; gap: 6px; }
-.cooldown-info.active { display: flex; }
-.comment-feed { display: flex; flex-direction: column; gap: 8px; max-height: 220px; overflow-y: auto; }
-.comment-item { background: var(--bg-slot); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 10px; }
-.comment-author { font-size: 12px; font-weight: 700; color: #818cf8; }
-.comment-time { font-size: 10px; color: var(--text-muted); margin-bottom: 4px; }
-.comment-text { font-size: 13px; }
-
-/* Trade Simulator */
-.trade-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
-.trade-column { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 12px; }
-.trade-column h4 { font-size: 12px; font-weight: 700; text-transform: uppercase; color: var(--text-muted); text-align: center; margin-bottom: 10px; }
-.slots-wrapper { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-bottom: 10px; }
-.slot { aspect-ratio: 1; border: 1.5px dashed var(--border-color); border-radius: var(--radius-md); background: var(--bg-slot); display: flex; align-items: center; justify-content: center; cursor: pointer; overflow: hidden; transition: 0.2s; font-size: 16px; color: var(--text-muted); }
-.slot.filled { border-style: solid; border-color: var(--accent-purple); }
-.slot img { width: 100%; height: 100%; object-fit: cover; }
-.slot-sum { text-align: center; font-size: 12px; font-weight: 700; color: var(--accent-gold); border-top: 1px solid var(--border-color); padding-top: 6px; }
-
-.trade-verdict { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 14px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
-.verdict-val { font-size: 18px; font-weight: 800; }
-.verdict-val.profit { color: var(--accent-green); }
-.verdict-val.loss { color: var(--accent-red); }
-.verdict-val.fair { color: var(--accent-gold); }
-
-/* Modal Picker */
-.modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0, 0, 0, 0.8); z-index: 200; align-items: center; justify-content: center; padding: 16px; backdrop-filter: blur(4px); }
-.modal-overlay.active { display: flex; }
-.modal-content { background: var(--bg-main); border: 1px solid var(--border-color); border-radius: var(--radius-lg); width: 100%; max-width: 360px; max-height: 75vh; overflow-y: auto; padding: 16px; }
-.modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
-.picker-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
-.picker-item { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 8px; cursor: pointer; }
-.picker-item-img { width: 100%; aspect-ratio: 1; border-radius: 4px; overflow: hidden; margin-bottom: 4px; }
-.picker-item-img img { width: 100%; height: 100%; object-fit: cover; }
-</style>
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(8px); display: none; justify-content: center; align-items: center; z-index: 1000; padding: 16px; opacity: 0; transition: opacity 0.3s ease; }
+        .modal-overlay.active { display: flex; opacity: 1; }
+        .modal-card { background: #161b22; border-radius: 20px; border: 1px solid #30363d; width: 100%; max-width: 400px; padding: 20px; }
+        .input-field { width: 100%; background: #0d1117; border: 1px solid #30363d; border-radius: 10px; padding: 10px; color: #fff; margin-bottom: 10px; outline: none; }
+        .btn-submit { width: 100%; background: #6366f1; color: white; border: none; padding: 10px; border-radius: 10px; font-weight: 600; cursor: pointer; }
+        .btn-submit:disabled { background: #373e47; cursor: not-allowed; }
+        .comments-list { background: #0d1117; border: 1px solid #21262d; border-radius: 12px; height: 150px; overflow-y: auto; padding: 10px; margin-bottom: 15px; display: flex; flex-direction: column; gap: 8px; }
+        .comment-item { background: #161b22; padding: 8px; border-radius: 8px; font-size: 0.75rem; border: 1px solid #252a32; }
+    </style>
 </head>
 <body>
 
-<!-- MAIN VIEW -->
-<div id="mainView">
-  <header>
-    <div class="brand-logo">Divaz Value 💄</div>
-    <div style="color: var(--text-muted); cursor: pointer;">☰</div>
-  </header>
-  <div class="status-tag"><span class="pulse-dot"></span> Official System • Realtime Sync</div>
-  
-  <input type="text" id="searchInput" class="search-input" placeholder="Tìm tên sản phẩm...">
-  
-  <div class="filter-bar" id="filterBar">
-    <button class="filter-btn active" data-filter="all" data-title="Tất Cả Vật Phẩm">All Items</button>
-    <button class="filter-btn trade-mode" id="btnOpenTrade">TRADE SIM</button>
-    <button class="filter-btn" data-filter="katana" data-title="Katana Collection">Katana</button>
-    <button class="filter-btn" data-filter="style" data-title="Style Outfits">Style</button>
-    <button class="filter-btn" data-filter="nail" data-title="Nail Art">Nail</button>
-    <button class="filter-btn" data-filter="shoes" data-title="Shoes & Kicks">Shoes</button>
-  </div>
-
-  <h2 class="section-header" id="sectionTitle">Tất Cả Vật Phẩm</h2>
-  <div class="items-grid" id="itemsGrid"></div>
-</div>
-
-<!-- DETAIL VIEW -->
-<div class="view-panel" id="detailView">
-  <div class="view-header">
-    <button class="icon-btn" id="btnBackFromDetail">←</button>
-    <h3 id="detailHeaderTitle">Chi Tiết Vật Phẩm</h3>
-  </div>
-  <div class="detail-preview"><img id="detailImage" src="" alt=""></div>
-  <div class="detail-card">
-    <h2 id="detailTitle">-</h2>
-    <div class="price" id="detailPrice">Giá trị: 0</div>
-  </div>
-
-  <div class="comments-box">
-    <h3>Thảo Luận & Bình Luận</h3>
-    <div class="comment-form">
-      <input type="text" id="commentAuthor" class="form-input" placeholder="Tên của bạn...">
-      <input type="text" id="commentContent" class="form-input" placeholder="Viết bình luận...">
-      <button class="btn-submit" id="btnSendComment">Gửi Bình Luận</button>
+    <div class="navbar">
+        <div class="brand">Divaz Value 💄</div>
+        <button class="menu-btn"><i class="bi bi-list"></i></button>
     </div>
-    <div class="cooldown-info" id="cooldownNotice">
-      ⏱️ Vui lòng chờ <span id="cooldownTimerSec">60</span>s để bình luận tiếp.
+
+    <div class="badge-official">
+        <span class="dot"></span>
+        OFFICIAL • Verified (No Login) Update
     </div>
-    <div class="comment-feed" id="commentFeed"></div>
-  </div>
-</div>
 
-<!-- TRADE VIEW -->
-<div class="view-panel" id="tradeView">
-  <div class="view-header">
-    <button class="icon-btn" id="btnBackFromTrade">←</button>
-    <h3 style="color: var(--accent-red)">GIAO DỊCH GIẢ LẬP</h3>
-  </div>
-
-  <div class="trade-grid">
-    <div class="trade-column">
-      <h4>BẠN CÓ</h4>
-      <div class="slots-wrapper" id="yourSlots"></div>
-      <div class="slot-sum" id="yourTotal">0</div>
+    <div class="search-box">
+        <input type="text" class="search-input" id="searchBar" placeholder="Search item name...">
     </div>
-    <div class="trade-column">
-      <h4>ĐỐI PHƯƠNG</h4>
-      <div class="slots-wrapper" id="theirSlots"></div>
-      <div class="slot-sum" id="theirTotal">0</div>
+
+    <!-- Filter Buttons -->
+    <div class="categories" id="filterContainer">
+        <button class="btn-filter active-all" data-filter="ALL">All Items</button>
+        <button class="btn-filter" data-filter="TRADE">TRADE</button>
+        <button class="btn-filter" data-filter="KATANA">Katana</button>
+        <button class="btn-filter" data-filter="STYLE">Style</button>
+        <button class="btn-filter" data-filter="NAIL">Nail</button>
+        <button class="btn-filter" data-filter="SHOES">Shoes</button>
     </div>
-  </div>
 
-  <div class="trade-verdict">
-    <span style="font-size: 12px; color: var(--text-muted);">KẾT QUẢ</span>
-    <div>
-      <span class="verdict-val fair" id="tradeDiff">0</span>
-      <span id="tradeStatus" style="font-size: 12px; font-weight: 700; margin-left: 6px;">FAIR</span>
+    <div class="section-title" id="sectionTitle">All Items</div>
+
+    <div class="item-grid" id="itemGrid">
+        <!-- KATANA -->
+        <div class="item-card" data-category="KATANA">
+            <div class="image-box"><img src="https://i.postimg.cc/fLHT19kM/Screenshot-2026-0816-134912.jpg" alt="Cosmo Katana"></div>
+            <span class="tag">KATANA</span>
+            <div class="item-name">Cosmo Katana</div>
+            <div class="info-row"><span>Value:</span> <span class="val-num">10.000</span></div>
+            <button class="btn-plus" onclick="openModal('Cosmo Katana', '10.000', 'https://i.postimg.cc/fLHT19kM/Screenshot-2026-0816-134912.jpg')"><i class="bi bi-plus-lg"></i></button>
+        </div>
+        
+        <!-- STYLE -->
+        <div class="item-card" data-category="STYLE">
+            <div class="image-box"><img src="https://i.postimg.cc/7hGGVVX6/1786863889127.png" alt="Style Ninja"></div>
+            <span class="tag">STYLE</span>
+            <div class="item-name">Style Ninja</div>
+            <div class="info-row"><span>Value:</span> <span class="val-num">1.455</span></div>
+            <button class="btn-plus" onclick="openModal('Style Ninja', '1.455', 'https://i.postimg.cc/7hGGVVX6/1786863889127.png')"><i class="bi bi-plus-lg"></i></button>
+        </div>
+
+        <!-- NAIL -->
+        <div class="item-card" data-category="NAIL">
+            <div class="image-box"><img src="https://i.postimg.cc/5Nbx4pdL/1786861203962.png" alt="Icy"></div>
+            <span class="tag">NAIL</span>
+            <div class="item-name">Icy</div>
+            <div class="info-row"><span>Value:</span> <span class="val-num">3.000</span></div>
+            <button class="btn-plus" onclick="openModal('Icy', '3.000', 'https://i.postimg.cc/5Nbx4pdL/1786861203962.png')"><i class="bi bi-plus-lg"></i></button>
+        </div>
+
+        <!-- SHOES -->
+        <div class="item-card" data-category="SHOES">
+            <div class="image-box"><img src="https://i.postimg.cc/NjGf4Ddb/1786861234119.png" alt="Void Skull"></div>
+            <span class="tag">SHOES</span>
+            <div class="item-name">Void Skull</div>
+            <div class="info-row"><span>Value:</span> <span class="val-num">600</span></div>
+            <button class="btn-plus" onclick="openModal('Void Skull', '600', 'https://i.postimg.cc/NjGf4Ddb/1786861234119.png')"><i class="bi bi-plus-lg"></i></button>
+        </div>
     </div>
-  </div>
 
-  <button class="btn-submit" id="btnResetTrade" style="background: #1e293b; width: 100%;">Làm Mới Giao Dịch</button>
-</div>
+    <!-- Modal -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-card">
+            <div class="modal-img-box" style="height:150px; display:flex; justify-content:center; align-items:center; background:#1c2128; border-radius:12px; margin-bottom:15px;">
+                <img id="modalImg" src="" style="max-height:120px;" alt="">
+            </div>
+            <div id="modalName" style="font-weight:700; font-size:1.1rem; margin-bottom:5px;"></div>
+            <div style="font-size:0.85rem; color:#8b949e; margin-bottom:15px;">Value: <span id="modalValue" style="color:#f59e0b; font-weight:700;"></span></div>
 
-<!-- MODAL ITEM PICKER -->
-<div class="modal-overlay" id="itemPickerModal">
-  <div class="modal-content">
-    <div class="modal-header">
-      <h4>Chọn Vật Phẩm</h4>
-      <button class="icon-btn" id="btnCloseModal">×</button>
+            <textarea id="commentInput" class="input-field" placeholder="Write a comment..." rows="2"></textarea>
+            <button class="btn-submit" id="submitBtn" onclick="addComment()">Post Comment</button>
+
+            <div style="font-size:0.9rem; font-weight:700; margin:20px 0 10px;">Comments</div>
+            <div class="comments-list" id="commentsList"></div>
+        </div>
     </div>
-    <div class="picker-grid" id="pickerGrid"></div>
-  </div>
-</div>
 
-<script>
-// ===== APP ENGINE (ES6 CLASS ARCHITECTURE) =====
-class DivazValueApp {
-  constructor() {
-    this.database = [
-      { id: 'item1', name: 'Cosmo Katana', value: 10000, img: 'https://i.postimg.cc/fLHT19kM/Screenshot-2026-0816-134912.jpg', cat: 'katana' },
-      { id: 'item2', name: 'Style Ninja', value: 1455, img: 'https://i.postimg.cc/7hGGVVX6/1786863889127.png', cat: 'style' },
-      { id: 'item3', name: 'Icy', value: 3000, img: 'https://i.postimg.cc/5Nbx4pdL/1786861203962.png', cat: 'nail' },
-      { id: 'item4', name: 'Void Skull', value: 600, img: 'https://i.postimg.cc/NjGf4Ddb/1786861234119.png', cat: 'shoes' }
-    ];
+    <script>
+        // --- FILTER LOGIC ---
+        const filterBtns = document.querySelectorAll('.btn-filter');
+        const items = document.querySelectorAll('.item-card');
+        const sectionTitle = document.getElementById('sectionTitle');
 
-    this.state = {
-      activeFilter: 'all',
-      searchQuery: '',
-      selectedItemId: null,
-      cooldownInterval: null,
-      tradeSlots: {
-        your: Array(9).fill(null),
-        their: Array(9).fill(null)
-      },
-      activeSlotTarget: null
-    };
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => b.classList.remove('active-all'));
+                btn.classList.add('active-all');
+                sectionTitle.textContent = btn.textContent;
+                const filter = btn.getAttribute('data-filter');
+                items.forEach(item => {
+                    if (filter === 'ALL' || item.getAttribute('data-category') === filter) {
+                        item.style.display = 'flex';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        });
 
-    this.initDOM();
-    this.bindEvents();
-    this.renderCatalog();
-  }
+        // --- MODAL & COMMENT LOGIC ---
+        let currentItemKey = "";
+        let cooldownTimer = null;
 
-  initDOM() {
-    this.dom = {
-      mainView: document.getElementById('mainView'),
-      detailView: document.getElementById('detailView'),
-      tradeView: document.getElementById('tradeView'),
-      itemsGrid: document.getElementById('itemsGrid'),
-      searchInput: document.getElementById('searchInput'),
-      filterBar: document.getElementById('filterBar'),
-      sectionTitle: document.getElementById('sectionTitle'),
-      // Detail DOMs
-      detailImage: document.getElementById('detailImage'),
-      detailTitle: document.getElementById('detailTitle'),
-      detailPrice: document.getElementById('detailPrice'),
-      commentAuthor: document.getElementById('commentAuthor'),
-      commentContent: document.getElementById('commentContent'),
-      commentFeed: document.getElementById('commentFeed'),
-      btnSendComment: document.getElementById('btnSendComment'),
-      cooldownNotice: document.getElementById('cooldownNotice'),
-      cooldownTimerSec: document.getElementById('cooldownTimerSec'),
-      // Trade DOMs
-      yourSlots: document.getElementById('yourSlots'),
-      theirSlots: document.getElementById('theirSlots'),
-      yourTotal: document.getElementById('yourTotal'),
-      theirTotal: document.getElementById('theirTotal'),
-      tradeDiff: document.getElementById('tradeDiff'),
-      tradeStatus: document.getElementById('tradeStatus'),
-      modal: document.getElementById('itemPickerModal'),
-      pickerGrid: document.getElementById('pickerGrid')
-    };
-  }
+        function openModal(name, value, imgSrc) {
+            currentItemKey = name;
+            document.getElementById('modalName').textContent = name;
+            document.getElementById('modalValue').textContent = value;
+            document.getElementById('modalImg').src = imgSrc;
+            renderComments();
+            checkCooldown();
+            const modal = document.getElementById('modalOverlay');
+            modal.style.display = 'flex';
+            setTimeout(() => modal.classList.add('active'), 10);
+        }
 
-  bindEvents() {
-    // Search & Filter
-    this.dom.searchInput.addEventListener('input', (e) => {
-      this.state.searchQuery = e.target.value.toLowerCase().trim();
-      this.renderCatalog();
-    });
+        document.getElementById('modalOverlay').addEventListener('click', (e) => {
+            if(e.target.id === 'modalOverlay') closeModal();
+        });
 
-    this.dom.filterBar.addEventListener('click', (e) => {
-      const btn = e.target.closest('.filter-btn');
-      if (!btn) return;
-      if (btn.id === 'btnOpenTrade') {
-        this.openView('trade');
-        this.renderTradeSimulator();
-        return;
-      }
-      this.dom.filterBar.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      this.state.activeFilter = btn.dataset.filter;
-      this.dom.sectionTitle.textContent = btn.dataset.title;
-      this.renderCatalog();
-    });
+        function closeModal() {
+            const modal = document.getElementById('modalOverlay');
+            modal.classList.remove('active');
+            setTimeout(() => modal.style.display = 'none', 300);
+        }
 
-    // Navigation Back
-    document.getElementById('btnBackFromDetail').onclick = () => this.openView('main');
-    document.getElementById('btnBackFromTrade').onclick = () => this.openView('main');
+        function renderComments() {
+            const list = document.getElementById('commentsList');
+            list.innerHTML = "";
+            let data = JSON.parse(localStorage.getItem('comments_' + currentItemKey) || "[]");
+            data.forEach(item => {
+                const commentEl = document.createElement('div');
+                commentEl.className = 'comment-item';
+                commentEl.innerHTML = `<div class="comment-text"><b>Guest:</b> ${escapeHtml(item.text)}</div><small style="color:#6e7681">${item.date}</small>`;
+                list.appendChild(commentEl);
+            });
+            list.scrollTop = list.scrollHeight;
+        }
 
-    // Comment System
-    this.dom.btnSendComment.onclick = () => this.handleCommentSubmit();
-    this.dom.commentContent.onkeypress = (e) => e.key === 'Enter' && this.handleCommentSubmit();
+        function addComment() {
+            const textInp = document.getElementById('commentInput');
+            const text = textInp.value.trim();
+            if (!text) return alert("Please write something!");
 
-    // Trade Reset & Modal
-    document.getElementById('btnResetTrade').onclick = () => {
-      this.state.tradeSlots.your.fill(null);
-      this.state.tradeSlots.their.fill(null);
-      this.renderTradeSimulator();
-    };
+            let data = JSON.parse(localStorage.getItem('comments_' + currentItemKey) || "[]");
+            const now = new Date();
+            const dateStr = now.toLocaleString(); 
 
-    document.getElementById('btnCloseModal').onclick = () => this.closePickerModal();
-    this.dom.modal.onclick = (e) => e.target === this.dom.modal && this.closePickerModal();
-  }
+            data.push({ text: text, date: dateStr });
+            if (data.length > 10) data.shift();
 
-  openView(viewName) {
-    [this.dom.mainView, this.dom.detailView, this.dom.tradeView].forEach(v => v.classList.remove('active'));
-    if (viewName === 'main') this.dom.mainView.style.display = 'block';
-    if (viewName === 'detail') this.dom.detailView.classList.add('active');
-    if (viewName === 'trade') this.dom.tradeView.classList.add('active');
-    window.scrollTo(0, 0);
-  }
+            localStorage.setItem('comments_' + currentItemKey, JSON.stringify(data));
+            localStorage.setItem('last_comment_time', Date.now());
+            textInp.value = "";
+            renderComments();
+            checkCooldown();
+        }
 
-  renderCatalog() {
-    this.dom.itemsGrid.innerHTML = '';
-    const filtered = this.database.filter(item => {
-      const matchCat = this.state.activeFilter === 'all' || item.cat === this.state.activeFilter;
-      const matchSearch = !this.state.searchQuery || item.name.toLowerCase().includes(this.state.searchQuery);
-      return matchCat && matchSearch;
-    });
+        function checkCooldown() {
+            const lastTime = localStorage.getItem('last_comment_time');
+            const btn = document.getElementById('submitBtn');
+            if (!lastTime) return;
 
-    filtered.forEach(item => {
-      const card = document.createElement('div');
-      card.className = 'item-card';
-      card.innerHTML = `
-        <div class="card-img-wrap"><img src="${item.img}" alt="${item.name}"></div>
-        <span class="card-tag">${item.cat}</span>
-        <div class="card-title">${item.name}</div>
-        <div class="card-val">Value: ${item.value.toLocaleString()}</div>
-      `;
-      card.onclick = () => this.openItemDetails(item);
-      this.dom.itemsGrid.appendChild(card);
-    });
-  }
+            const diff = Math.floor((Date.now() - parseInt(lastTime)) / 1000);
+            if (diff < 60) {
+                let remaining = 60 - diff;
+                btn.disabled = true;
+                btn.textContent = `Wait (${remaining}s)`;
+                clearInterval(cooldownTimer);
+                cooldownTimer = setInterval(() => {
+                    remaining--;
+                    if (remaining <= 0) {
+                        clearInterval(cooldownTimer);
+                        btn.disabled = false;
+                        btn.textContent = "Post Comment";
+                    } else {
+                        btn.textContent = `Wait (${remaining}s)`;
+                    }
+                }, 1000);
+            } else {
+                btn.disabled = false;
+                btn.textContent = "Post Comment";
+            }
+        }
 
-  openItemDetails(item) {
-    this.state.selectedItemId = item.id;
-    this.dom.detailImage.src = item.img;
-    this.dom.detailTitle.textContent = item.name;
-    this.dom.detailPrice.textContent = `Giá trị: ${item.value.toLocaleString()}`;
+        function escapeHtml(str) { return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
+    </script>
+</body>
+              </html>
 
-    // Load User Saved Name
-    const savedName = localStorage.getItem('divaz_user');
-    if (savedName) this.dom.commentAuthor.value = savedName;
-
-    this.checkCommentCooldown();
-    this.renderComments();
-    this.openView('detail');
-  }
-
-  // ===== COMMENTS LOGIC =====
-  handleCommentSubmit() {
-    const author = this.dom.commentAuthor.value.trim() || 'Người dùng Ẩn danh';
-    const content = this.dom.commentContent.value.trim();
-    if (!content) return;
-
-    const cooldownEnd = parseInt(localStorage.getItem('divaz_cooldown') || '0');
-    if (Date.now() < cooldownEnd) return;
-
-    localStorage.setItem('divaz_user', author);
-    const comments = JSON.parse(localStorage.getItem(`comments_${this.state.selectedItemId}`) || '[]');
-
-    const newComment = {
-      author,
-      content,
-      time: new Date().toLocaleDateString('vi-VN') + ' ' + new Date().toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' })
-    };
-
-    comments.push(newComment);
-    if (comments.length > 20) comments.shift();
-    localStorage.setItem(`comments_${this.state.selectedItemId}`, JSON.stringify(comments));
-
-    this.dom.commentContent.value = '';
-    this.renderComments();
-
-    // Trigger 60s cooldown
-    const nextCooldown = Date.now() + 60000;
-    localStorage.setItem('divaz_cooldown', nextCooldown.toString());
-    this.startCooldownTimer(60);
-  }
-
-  checkCommentCooldown() {
-    const cooldownEnd = parseInt(localStorage.getItem('divaz_cooldown') || '0');
-    const remainSec = Math.ceil((cooldownEnd - Date.now()) / 1000);
-    if (remainSec > 0) this.startCooldownTimer(remainSec);
-    else this.stopCooldownTimer();
-  }
-
-  startCooldownTimer(seconds) {
-    this.dom.cooldownNotice.classList.add('active');
-    this.dom.btnSendComment.disabled = true;
-    this.dom.commentContent.disabled = true;
-
-    if (this.state.cooldownInterval) clearInterval(this.state.cooldownInterval);
-    let current = seconds;
-    this.dom.cooldownTimerSec.textContent = current;
-
-    this.state.cooldownInterval = setInterval(() => {
-      current--;
-      this.dom.cooldownTimerSec.textContent = current;
-      if (current <= 0) this.stopCooldownTimer();
-    }, 1000);
-  }
-
- 
