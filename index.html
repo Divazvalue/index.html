@@ -67,10 +67,9 @@
         <input type="text" class="search-input" id="searchBar" placeholder="Search item name...">
     </div>
 
-    <!-- Filter Buttons -->
+    <!-- Filter Buttons (Đã gỡ nút TRADE) -->
     <div class="categories" id="filterContainer">
         <button class="btn-filter active-all" data-filter="ALL">All Items</button>
-        <button class="btn-filter" data-filter="TRADE">TRADE</button>
         <button class="btn-filter" data-filter="KATANA">Katana</button>
         <button class="btn-filter" data-filter="STYLE">Style</button>
         <button class="btn-filter" data-filter="NAIL">Nail</button>
@@ -89,13 +88,13 @@
             <button class="btn-plus" onclick="openModal('Cosmo Katana', '10.000', 'https://i.postimg.cc/fLHT19kM/Screenshot-2026-0816-134912.jpg')"><i class="bi bi-plus-lg"></i></button>
         </div>
         
-        <!-- STYLE -->
+        <!-- STYLE (Value đã chỉnh về 100) -->
         <div class="item-card" data-category="STYLE">
             <div class="image-box"><img src="https://i.postimg.cc/7hGGVVX6/1786863889127.png" alt="Style Ninja"></div>
             <span class="tag">STYLE</span>
             <div class="item-name">Style Ninja</div>
-            <div class="info-row"><span>Value:</span> <span class="val-num">1.455</span></div>
-            <button class="btn-plus" onclick="openModal('Style Ninja', '1.455', 'https://i.postimg.cc/7hGGVVX6/1786863889127.png')"><i class="bi bi-plus-lg"></i></button>
+            <div class="info-row"><span>Value:</span> <span class="val-num">100</span></div>
+            <button class="btn-plus" onclick="openModal('Style Ninja', '100', 'https://i.postimg.cc/7hGGVVX6/1786863889127.png')"><i class="bi bi-plus-lg"></i></button>
         </div>
 
         <!-- NAIL -->
@@ -117,7 +116,7 @@
         </div>
     </div>
 
-    <!-- Modal -->
+    <!-- Modal Comment -->
     <div class="modal-overlay" id="modalOverlay">
         <div class="modal-card">
             <div class="modal-img-box" style="height:150px; display:flex; justify-content:center; align-items:center; background:#1c2128; border-radius:12px; margin-bottom:15px;">
@@ -135,26 +134,41 @@
     </div>
 
     <script>
-        // --- FILTER LOGIC ---
+        // --- FILTER & SEARCH LOGIC ---
         const filterBtns = document.querySelectorAll('.btn-filter');
         const items = document.querySelectorAll('.item-card');
         const sectionTitle = document.getElementById('sectionTitle');
+        const searchBar = document.getElementById('searchBar');
 
         filterBtns.forEach(btn => {
             btn.addEventListener('click', () => {
                 filterBtns.forEach(b => b.classList.remove('active-all'));
                 btn.classList.add('active-all');
                 sectionTitle.textContent = btn.textContent;
-                const filter = btn.getAttribute('data-filter');
-                items.forEach(item => {
-                    if (filter === 'ALL' || item.getAttribute('data-category') === filter) {
-                        item.style.display = 'flex';
-                    } else {
-                        item.style.display = 'none';
-                    }
-                });
+                filterItems();
             });
         });
+
+        searchBar.addEventListener('input', filterItems);
+
+        function filterItems() {
+            const activeFilter = document.querySelector('.btn-filter.active-all').getAttribute('data-filter');
+            const searchText = searchBar.value.toLowerCase().trim();
+
+            items.forEach(item => {
+                const category = item.getAttribute('data-category');
+                const itemName = item.querySelector('.item-name').textContent.toLowerCase();
+
+                const matchesCategory = (activeFilter === 'ALL' || category === activeFilter);
+                const matchesSearch = itemName.includes(searchText);
+
+                if (matchesCategory && matchesSearch) {
+                    item.style.display = 'flex';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
 
         // --- MODAL & COMMENT LOGIC ---
         let currentItemKey = "";
@@ -244,5 +258,4 @@
         function escapeHtml(str) { return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
     </script>
 </body>
-              </html>
-
+</html>
