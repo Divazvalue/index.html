@@ -22,9 +22,14 @@
         .search-input { width: 100%; background-color: #161b22; border: 1px solid #21262d; border-radius: 12px; padding: 10px 14px; color: #ffffff; font-size: 0.9rem; outline: none; transition: all 0.3s ease; }
         .search-input:focus { border: 1px solid #6366f1; }
 
-        .categories { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 10px; margin-bottom: 12px; scrollbar-width: none; }
+        /* Khung chứa các nút lọc */
+        .categories { display: flex; gap: 6px; overflow-x: auto; padding-top: 12px; padding-bottom: 10px; margin-bottom: 12px; scrollbar-width: none; align-items: flex-end; }
         .btn-filter { padding: 6px 14px; border-radius: 20px; border: none; font-size: 0.8rem; font-weight: 600; cursor: pointer; background-color: #161b22; color: #8b949e; transition: 0.3s; white-space: nowrap; }
         .btn-filter.active-all { background-color: #6366f1; color: #ffffff; }
+
+        /* Container cho nút có nhãn NEW */
+        .filter-new-wrapper { position: relative; display: inline-flex; flex-direction: column; align-items: center; }
+        .badge-new { position: absolute; top: -11px; background: #ef4444; color: #fff; font-size: 0.55rem; font-weight: 800; padding: 1px 5px; border-radius: 6px; text-transform: uppercase; letter-spacing: 0.5px; z-index: 2; pointer-events: none; }
 
         .section-title { font-size: 1.2rem; font-weight: 700; margin-bottom: 10px; }
         .item-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
@@ -67,19 +72,25 @@
         <input type="text" class="search-input" id="searchBar" placeholder="Search item name...">
     </div>
 
-    <!-- Filter Buttons (Đã gỡ nút TRADE) -->
+    <!-- Filter Buttons (Other Weapons nằm cuối cùng + Tag NEW ở trên) -->
     <div class="categories" id="filterContainer">
         <button class="btn-filter active-all" data-filter="ALL">All Items</button>
         <button class="btn-filter" data-filter="KATANA">Katana</button>
         <button class="btn-filter" data-filter="STYLE">Style</button>
         <button class="btn-filter" data-filter="NAIL">Nail</button>
         <button class="btn-filter" data-filter="SHOES">Shoes</button>
+        
+        <div class="filter-new-wrapper">
+            <span class="badge-new">NEW</span>
+            <button class="btn-filter" data-filter="OTHER">Other Weapons</button>
+        </div>
     </div>
 
     <div class="section-title" id="sectionTitle">All Items</div>
 
+    <!-- Danh sách vật phẩm sắp xếp chuẩn vị trí cũ -->
     <div class="item-grid" id="itemGrid">
-        <!-- KATANA -->
+        <!-- 1. Cosmo Katana -->
         <div class="item-card" data-category="KATANA">
             <div class="image-box"><img src="https://i.postimg.cc/fLHT19kM/Screenshot-2026-0816-134912.jpg" alt="Cosmo Katana"></div>
             <span class="tag">KATANA</span>
@@ -88,7 +99,7 @@
             <button class="btn-plus" onclick="openModal('Cosmo Katana', '10.000', 'https://i.postimg.cc/fLHT19kM/Screenshot-2026-0816-134912.jpg')"><i class="bi bi-plus-lg"></i></button>
         </div>
         
-        <!-- STYLE (Value đã chỉnh về 100) -->
+        <!-- 2. Style Ninja -->
         <div class="item-card" data-category="STYLE">
             <div class="image-box"><img src="https://i.postimg.cc/7hGGVVX6/1786863889127.png" alt="Style Ninja"></div>
             <span class="tag">STYLE</span>
@@ -97,7 +108,7 @@
             <button class="btn-plus" onclick="openModal('Style Ninja', '100', 'https://i.postimg.cc/7hGGVVX6/1786863889127.png')"><i class="bi bi-plus-lg"></i></button>
         </div>
 
-        <!-- NAIL -->
+        <!-- 3. Icy -->
         <div class="item-card" data-category="NAIL">
             <div class="image-box"><img src="https://i.postimg.cc/5Nbx4pdL/1786861203962.png" alt="Icy"></div>
             <span class="tag">NAIL</span>
@@ -106,13 +117,40 @@
             <button class="btn-plus" onclick="openModal('Icy', '3.000', 'https://i.postimg.cc/5Nbx4pdL/1786861203962.png')"><i class="bi bi-plus-lg"></i></button>
         </div>
 
-        <!-- SHOES -->
+        <!-- 4. Void Skull -->
         <div class="item-card" data-category="SHOES">
             <div class="image-box"><img src="https://i.postimg.cc/NjGf4Ddb/1786861234119.png" alt="Void Skull"></div>
             <span class="tag">SHOES</span>
             <div class="item-name">Void Skull</div>
             <div class="info-row"><span>Value:</span> <span class="val-num">600</span></div>
             <button class="btn-plus" onclick="openModal('Void Skull', '600', 'https://i.postimg.cc/NjGf4Ddb/1786861234119.png')"><i class="bi bi-plus-lg"></i></button>
+        </div>
+
+        <!-- 5. Viper Bite Katana -->
+        <div class="item-card" data-category="KATANA">
+            <div class="image-box"><img src="https://i.postimg.cc/mkQ6v9yk/1786936464053.png" alt="Viper Bite Katana"></div>
+            <span class="tag">KATANA</span>
+            <div class="item-name">Viper Bite Katana</div>
+            <div class="info-row"><span>Value:</span> <span class="val-num">150</span></div>
+            <button class="btn-plus" onclick="openModal('Viper Bite Katana', '150', 'https://i.postimg.cc/mkQ6v9yk/1786936464053.png')"><i class="bi bi-plus-lg"></i></button>
+        </div>
+
+        <!-- 6. Dash Dagger -->
+        <div class="item-card" data-category="OTHER">
+            <div class="image-box"><img src="https://i.postimg.cc/DwY5Y5KK/1786936703054.png" alt="Dash Dagger"></div>
+            <span class="tag">Other Weapons</span>
+            <div class="item-name">Dash Dagger</div>
+            <div class="info-row"><span>Value:</span> <span class="val-num">1.000</span></div>
+            <button class="btn-plus" onclick="openModal('Dash Dagger', '1.000', 'https://i.postimg.cc/DwY5Y5KK/1786936703054.png')"><i class="bi bi-plus-lg"></i></button>
+        </div>
+
+        <!-- 7. Demon Scythe -->
+        <div class="item-card" data-category="OTHER">
+            <div class="image-box"><img src="https://i.postimg.cc/kXTyBwGD/1786936979316.png" alt="Demon Scythe"></div>
+            <span class="tag">Other Weapons</span>
+            <div class="item-name">Demon Scythe</div>
+            <div class="info-row"><span>Value:</span> <span class="val-num">5.000</span></div>
+            <button class="btn-plus" onclick="openModal('Demon Scythe', '5.000', 'https://i.postimg.cc/kXTyBwGD/1786936979316.png')"><i class="bi bi-plus-lg"></i></button>
         </div>
     </div>
 
@@ -258,4 +296,5 @@
         function escapeHtml(str) { return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
     </script>
 </body>
-</html>
+    </html>
+    
