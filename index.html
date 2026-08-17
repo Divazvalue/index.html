@@ -55,7 +55,7 @@
         .comments-list { background: #0d1117; border: 1px solid #21262d; border-radius: 12px; height: 150px; overflow-y: auto; padding: 10px; margin-bottom: 15px; display: flex; flex-direction: column; gap: 8px; }
         .comment-item { background: #161b22; padding: 8px; border-radius: 8px; font-size: 0.75rem; border: 1px solid #252a32; }
 
-        /* --- WELCOME SCREEN OVERLAY --- */
+        /* WELCOME SCREEN OVERLAY */
         .welcome-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #0a0d12; z-index: 2000; display: flex; flex-direction: column; justify-content: space-between; align-items: center; padding: 24px 16px; transition: transform 0.8s cubic-bezier(0.6, -0.28, 0.735, 0.04), opacity 0.6s ease; }
         .welcome-overlay.drop-out { transform: translateY(110vh) rotate(12deg); opacity: 0; pointer-events: none; }
         
@@ -66,7 +66,7 @@
         .btn-continue:hover { background: #4f46e5; }
         .btn-continue:active { transform: scale(0.98); }
 
-        /* --- OFF-CANVAS SIDE MENU --- */
+        /* OFF-CANVAS SIDE MENU */
         .side-menu-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(4px); z-index: 1500; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s ease; }
         .side-menu-overlay.active { opacity: 1; visibility: visible; }
 
@@ -92,28 +92,28 @@
         <div class="welcome-img-container">
             <img src="https://i.postimg.cc/FsSLQZSp/received-1332431571989845.jpg" alt="Welcome Image">
         </div>
-        <button class="btn-continue" onclick="dismissWelcome()">Continue to Web</button>
+        <button class="btn-continue" id="btnContinue">Continue to Web</button>
     </div>
 
     <!-- OFF-CANVAS SIDE MENU -->
-    <div class="side-menu-overlay" id="menuOverlay" onclick="closeMenu()"></div>
+    <div class="side-menu-overlay" id="menuOverlay"></div>
     <div class="side-menu" id="sideMenu">
         <div class="menu-header">
             <div class="menu-title">Settings</div>
-            <button class="btn-close-menu" onclick="closeMenu()"><i class="bi bi-x-lg"></i></button>
+            <button class="btn-close-menu" id="btnCloseMenu"><i class="bi bi-x-lg"></i></button>
         </div>
         <div class="setting-item">
             <div class="setting-label">Skip Intro Screen on Startup?</div>
             <div class="toggle-group">
-                <button class="btn-toggle" id="btnSkipYes" onclick="setSkipIntro(true)">Yes</button>
-                <button class="btn-toggle active" id="btnSkipNo" onclick="setSkipIntro(false)">No</button>
+                <button class="btn-toggle" id="btnSkipYes">Yes</button>
+                <button class="btn-toggle active" id="btnSkipNo">No</button>
             </div>
         </div>
     </div>
 
     <div class="navbar">
         <div class="brand">Divaz Value 💄</div>
-        <button class="menu-btn" onclick="openMenu()"><i class="bi bi-list"></i></button>
+        <button class="menu-btn" id="btnOpenMenu"><i class="bi bi-list"></i></button>
     </div>
 
     <div class="badge-official">
@@ -125,7 +125,7 @@
         <input type="text" class="search-input" id="searchBar" placeholder="Search item name...">
     </div>
 
-    <!-- Filter Buttons (Other Weapons nằm cuối cùng + Tag NEW ở trên) -->
+    <!-- Filter Buttons -->
     <div class="categories" id="filterContainer">
         <button class="btn-filter active-all" data-filter="ALL">All Items</button>
         <button class="btn-filter" data-filter="KATANA">Katana</button>
@@ -141,69 +141,62 @@
 
     <div class="section-title" id="sectionTitle">All Items</div>
 
-    <!-- Danh sách vật phẩm sắp xếp chuẩn vị trí cũ -->
+    <!-- Item Grid -->
     <div class="item-grid" id="itemGrid">
-        <!-- 1. Cosmo Katana -->
         <div class="item-card" data-category="KATANA">
             <div class="image-box"><img src="https://i.postimg.cc/fLHT19kM/Screenshot-2026-0816-134912.jpg" alt="Cosmo Katana"></div>
             <span class="tag">KATANA</span>
             <div class="item-name">Cosmo Katana</div>
             <div class="info-row"><span>Value:</span> <span class="val-num">10.000</span></div>
-            <button class="btn-plus" onclick="openModal('Cosmo Katana', '10.000', 'https://i.postimg.cc/fLHT19kM/Screenshot-2026-0816-134912.jpg')"><i class="bi bi-plus-lg"></i></button>
+            <button class="btn-plus" data-name="Cosmo Katana" data-value="10.000" data-img="https://i.postimg.cc/fLHT19kM/Screenshot-2026-0816-134912.jpg"><i class="bi bi-plus-lg"></i></button>
         </div>
         
-        <!-- 2. Style Ninja -->
         <div class="item-card" data-category="STYLE">
             <div class="image-box"><img src="https://i.postimg.cc/7hGGVVX6/1786863889127.png" alt="Style Ninja"></div>
             <span class="tag">STYLE</span>
             <div class="item-name">Style Ninja</div>
             <div class="info-row"><span>Value:</span> <span class="val-num">100</span></div>
-            <button class="btn-plus" onclick="openModal('Style Ninja', '100', 'https://i.postimg.cc/7hGGVVX6/1786863889127.png')"><i class="bi bi-plus-lg"></i></button>
+            <button class="btn-plus" data-name="Style Ninja" data-value="100" data-img="https://i.postimg.cc/7hGGVVX6/1786863889127.png"><i class="bi bi-plus-lg"></i></button>
         </div>
 
-        <!-- 3. Icy -->
         <div class="item-card" data-category="NAIL">
             <div class="image-box"><img src="https://i.postimg.cc/5Nbx4pdL/1786861203962.png" alt="Icy"></div>
             <span class="tag">NAIL</span>
             <div class="item-name">Icy</div>
             <div class="info-row"><span>Value:</span> <span class="val-num">3.000</span></div>
-            <button class="btn-plus" onclick="openModal('Icy', '3.000', 'https://i.postimg.cc/5Nbx4pdL/1786861203962.png')"><i class="bi bi-plus-lg"></i></button>
+            <button class="btn-plus" data-name="Icy" data-value="3.000" data-img="https://i.postimg.cc/5Nbx4pdL/1786861203962.png"><i class="bi bi-plus-lg"></i></button>
         </div>
 
-        <!-- 4. Void Skull -->
         <div class="item-card" data-category="SHOES">
             <div class="image-box"><img src="https://i.postimg.cc/NjGf4Ddb/1786861234119.png" alt="Void Skull"></div>
             <span class="tag">SHOES</span>
             <div class="item-name">Void Skull</div>
             <div class="info-row"><span>Value:</span> <span class="val-num">600</span></div>
-            <button class="btn-plus" onclick="openModal('Void Skull', '600', 'https://i.postimg.cc/NjGf4Ddb/1786861234119.png')"><i class="bi bi-plus-lg"></i></button>
+            <button class="btn-plus" data-name="Void Skull" data-value="600" data-img="https://i.postimg.cc/NjGf4Ddb/1786861234119.png"><i class="bi bi-plus-lg"></i></button>
         </div>
 
-        <!-- 5. Viper Bite Katana -->
         <div class="item-card" data-category="KATANA">
             <div class="image-box"><img src="https://i.postimg.cc/mkQ6v9yk/1786936464053.png" alt="Viper Bite Katana"></div>
             <span class="tag">KATANA</span>
             <div class="item-name">Viper Bite Katana</div>
             <div class="info-row"><span>Value:</span> <span class="val-num">150</span></div>
-            <button class="btn-plus" onclick="openModal('Viper Bite Katana', '150', 'https://i.postimg.cc/mkQ6v9yk/1786936464053.png')"><i class="bi bi-plus-lg"></i></button>
+            <button class="btn-plus" data-name="Viper Bite Katana" data-value="150" data-img="https://i.postimg.cc/mkQ6v9yk/1786936464053.png"><i class="bi bi-plus-lg"></i></button>
         </div>
 
-        <!-- 6. Dash Dagger -->
         <div class="item-card" data-category="OTHER">
             <div class="image-box"><img src="https://i.postimg.cc/DwY5Y5KK/1786936703054.png" alt="Dash Dagger"></div>
             <span class="tag">Other Weapons</span>
             <div class="item-name">Dash Dagger</div>
             <div class="info-row"><span>Value:</span> <span class="val-num">1.000</span></div>
-            <button class="btn-plus" onclick="openModal('Dash Dagger', '1.000', 'https://i.postimg.cc/DwY5Y5KK/1786936703054.png')"><i class="bi bi-plus-lg"></i></button>
+            <button class="btn-plus" data-name="Dash Dagger" data-value="1.000" data-img="https://i.postimg.cc/DwY5Y5KK/1786936703054.png"><i class="bi bi-plus-lg"></i></button>
         </div>
 
-        <!-- 7. Demon Scythe -->
         <div class="item-card" data-category="OTHER">
             <div class="image-box"><img src="https://i.postimg.cc/kXTyBwGD/1786936979316.png" alt="Demon Scythe"></div>
             <span class="tag">Other Weapons</span>
             <div class="item-name">Demon Scythe</div>
             <div class="info-row"><span>Value:</span> <span class="val-num">5.000</span></div>
-            <button class="btn-plus" onclick="openModal('Demon Scythe', '5.000', 'https://i.postimg.cc/kXTyBwGD/1786936979316.png')"><i class="bi bi-plus-lg"></i></button>
+            <button class="btn-plus" data-name="Demon Scythe" data-value="5.000" data-img="https://i.postimg.cc/kXTyBwGD/1786936979316.png"><i class="bi bi-plus-lg"></i></button>
         </div>
     </div>
 
@@ -217,7 +210,7 @@
             <div style="font-size:0.85rem; color:#8b949e; margin-bottom:15px;">Value: <span id="modalValue" style="color:#f59e0b; font-weight:700;"></span></div>
 
             <textarea id="commentInput" class="input-field" placeholder="Write a comment..." rows="2"></textarea>
-            <button class="btn-submit" id="submitBtn" onclick="addComment()">Post Comment</button>
+            <button class="btn-submit" id="submitBtn">Post Comment</button>
 
             <div style="font-size:0.9rem; font-weight:700; margin:20px 0 10px;">Comments</div>
             <div class="comments-list" id="commentsList"></div>
@@ -225,112 +218,115 @@
     </div>
 
     <script>
-        // --- WELCOME SCREEN LOGIC ---
         document.addEventListener('DOMContentLoaded', () => {
-            const skipIntro = localStorage.getItem('skip_intro_screen') === 'true';
+            let currentItemKey = "";
+            let cooldownTimer = null;
+
+            // --- WELCOME SCREEN ---
             const welcomeOverlay = document.getElementById('welcomeOverlay');
+            const btnContinue = document.getElementById('btnContinue');
+            const skipIntro = localStorage.getItem('skip_intro_screen') === 'true';
+
             if (skipIntro && welcomeOverlay) {
                 welcomeOverlay.style.display = 'none';
             }
-            updateMenuUI(skipIntro);
-        });
 
-        function dismissWelcome() {
-            const welcomeOverlay = document.getElementById('welcomeOverlay');
-            welcomeOverlay.classList.add('drop-out');
-            setTimeout(() => {
-                welcomeOverlay.style.display = 'none';
-            }, 800);
-        }
+            btnContinue.addEventListener('click', () => {
+                welcomeOverlay.classList.add('drop-out');
+                setTimeout(() => { welcomeOverlay.style.display = 'none'; }, 800);
+            });
 
-        // --- SIDE MENU LOGIC ---
-        function openMenu() {
-            document.getElementById('sideMenu').classList.add('active');
-            document.getElementById('menuOverlay').classList.add('active');
-        }
+            // --- SIDE MENU ---
+            const sideMenu = document.getElementById('sideMenu');
+            const menuOverlay = document.getElementById('menuOverlay');
+            const btnOpenMenu = document.getElementById('btnOpenMenu');
+            const btnCloseMenu = document.getElementById('btnCloseMenu');
+            const btnSkipYes = document.getElementById('btnSkipYes');
+            const btnSkipNo = document.getElementById('btnSkipNo');
 
-        function closeMenu() {
-            document.getElementById('sideMenu').classList.remove('active');
-            document.getElementById('menuOverlay').classList.remove('active');
-        }
-
-        function setSkipIntro(skip) {
-            localStorage.setItem('skip_intro_screen', skip ? 'true' : 'false');
-            updateMenuUI(skip);
-        }
-
-        function updateMenuUI(skip) {
-            const btnYes = document.getElementById('btnSkipYes');
-            const btnNo = document.getElementById('btnSkipNo');
-            if (skip) {
-                btnYes.classList.add('active');
-                btnNo.classList.remove('active');
-            } else {
-                btnNo.classList.add('active');
-                btnYes.classList.remove('active');
+            function openMenu() {
+                sideMenu.classList.add('active');
+                menuOverlay.classList.add('active');
             }
-        }
 
-        // --- FILTER & SEARCH LOGIC ---
-        const filterBtns = document.querySelectorAll('.btn-filter');
-        const items = document.querySelectorAll('.item-card');
-        const sectionTitle = document.getElementById('sectionTitle');
-        const searchBar = document.getElementById('searchBar');
+            function closeMenu() {
+                sideMenu.classList.remove('active');
+                menuOverlay.classList.remove('active');
+            }
 
-        filterBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                filterBtns.forEach(b => b.classList.remove('active-all'));
-                btn.classList.add('active-all');
-                sectionTitle.textContent = btn.textContent;
-                filterItems();
-            });
-        });
+            btnOpenMenu.addEventListener('click', openMenu);
+            btnCloseMenu.addEventListener('click', closeMenu);
+            menuOverlay.addEventListener('click', closeMenu);
 
-        searchBar.addEventListener('input', filterItems);
-
-        function filterItems() {
-            const activeFilter = document.querySelector('.btn-filter.active-all').getAttribute('data-filter');
-            const searchText = searchBar.value.toLowerCase().trim();
-
-            items.forEach(item => {
-                const category = item.getAttribute('data-category');
-                const itemName = item.querySelector('.item-name').textContent.toLowerCase();
-
-                const matchesCategory = (activeFilter === 'ALL' || category === activeFilter);
-                const matchesSearch = itemName.includes(searchText);
-
-                if (matchesCategory && matchesSearch) {
-                    item.style.display = 'flex';
+            function updateMenuUI(skip) {
+                if (skip) {
+                    btnSkipYes.classList.add('active');
+                    btnSkipNo.classList.remove('active');
                 } else {
-                    item.style.display = 'none';
+                    btnSkipNo.classList.add('active');
+                    btnSkipYes.classList.remove('active');
                 }
+            }
+
+            btnSkipYes.addEventListener('click', () => {
+                localStorage.setItem('skip_intro_screen', 'true');
+                updateMenuUI(true);
             });
-        }
 
-        // --- MODAL & COMMENT LOGIC ---
-        let currentItemKey = "";
-        let cooldownTimer = null;
+            btnSkipNo.addEventListener('click', () => {
+                localStorage.setItem('skip_intro_screen', 'false');
+                updateMenuUI(false);
+            });
 
-        function openModal(name, value, imgSrc) {
-            currentItemKey = name;
-            document.getElementById('modalName').textContent = name;
-            document.getElementById('modalValue').textContent = value;
-            document.getElementById('modalImg').src = imgSrc;
-            renderComments();
-            checkCooldown();
-            const modal = document.getElementById('modalOverlay');
-            modal.style.display = 'flex';
-            setTimeout(() => modal.classList.add('active'), 10);
-        }
+            updateMenuUI(skipIntro);
 
-        document.getElementById('modalOverlay').addEventListener('click', (e) => {
-            if(e.target.id === 'modalOverlay') closeModal();
-        });
+            // --- FILTER & SEARCH ---
+            const filterBtns = document.querySelectorAll('.btn-filter');
+            const items = document.querySelectorAll('.item-card');
+            const sectionTitle = document.getElementById('sectionTitle');
+            const searchBar = document.getElementById('searchBar');
 
-        function closeModal() {
-            const modal = document.getElementById('modalOverlay');
-            modal.classList.remove('active');
-            setTimeout(() => modal.style.display = 'none', 300);
-        }
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    filterBtns.forEach(b => b.classList.remove('active-all'));
+                    btn.classList.add('active-all');
+                    sectionTitle.textContent = btn.textContent;
+                    filterItems();
+                });
+            });
 
-        f
+            searchBar.addEventListener('input', filterItems);
+
+            function filterItems() {
+                const activeFilter = document.querySelector('.btn-filter.active-all').getAttribute('data-filter');
+                const searchText = searchBar.value.toLowerCase().trim();
+
+                items.forEach(item => {
+                    const category = item.getAttribute('data-category');
+                    const itemName = item.querySelector('.item-name').textContent.toLowerCase();
+
+                    const matchesCategory = (activeFilter === 'ALL' || category === activeFilter);
+                    const matchesSearch = itemName.includes(searchText);
+
+                    if (matchesCategory && matchesSearch) {
+                        item.style.display = 'flex';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            }
+
+            // --- MODAL & COMMENTS ---
+            const modalOverlay = document.getElementById('modalOverlay');
+            const submitBtn = document.getElementById('submitBtn');
+
+            document.querySelectorAll('.btn-plus').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const name = btn.getAttribute('data-name');
+                    const value = btn.getAttribute('data-value');
+                    const img = btn.getAttribute('data-img');
+                    openModal(name, value, img);
+                });
+            });
+
+            
