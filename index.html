@@ -6,88 +6,11 @@
     <title>Divaz Value 💄</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
-        body { background-color: #0d1117; color: #ffffff; padding: 12px; max-width: 600px; margin: 0 auto; }
-
-        .navbar { display: flex; justify-content: space-between; align-items: center; padding-bottom: 12px; }
-        .brand { font-size: 1.1rem; font-weight: 700; display: flex; align-items: center; gap: 6px; }
-        .menu-btn { background: none; border: none; color: #9eacba; font-size: 1.4rem; cursor: pointer; }
-
-        .badge-official { display: inline-flex; align-items: center; gap: 6px; background-color: rgba(6, 78, 59, 0.4); border: 1px solid #059669; color: #10b981; font-size: 0.7rem; font-weight: 600; padding: 4px 10px; border-radius: 20px; margin-bottom: 12px; }
-        .dot { width: 6px; height: 6px; background-color: #10b981; border-radius: 50%; }
-
-        .search-box { position: relative; margin-bottom: 12px; }
-        .search-input { width: 100%; background-color: #161b22; border: 1px solid #21262d; border-radius: 12px; padding: 10px 14px; color: #ffffff; font-size: 0.9rem; outline: none; transition: all 0.3s ease; }
-        .search-input:focus { border: 1px solid #6366f1; }
-
-        /* Khung chứa các nút lọc */
-        .categories { display: flex; gap: 6px; overflow-x: auto; padding-top: 12px; padding-bottom: 10px; margin-bottom: 12px; scrollbar-width: none; align-items: flex-end; }
-        .btn-filter { padding: 6px 14px; border-radius: 20px; border: none; font-size: 0.8rem; font-weight: 600; cursor: pointer; background-color: #161b22; color: #8b949e; transition: 0.3s; white-space: nowrap; }
-        .btn-filter.active-all { background-color: #6366f1; color: #ffffff; }
-
-        /* Container cho nút có nhãn NEW */
-        .filter-new-wrapper { position: relative; display: inline-flex; flex-direction: column; align-items: center; }
-        .badge-new { position: absolute; top: -11px; background: #ef4444; color: #fff; font-size: 0.55rem; font-weight: 800; padding: 1px 5px; border-radius: 6px; text-transform: uppercase; letter-spacing: 0.5px; z-index: 2; pointer-events: none; }
-
-        .section-title { font-size: 1.2rem; font-weight: 700; margin-bottom: 10px; }
-        .item-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
-        
-        .item-card { background-color: #161b22; border-radius: 14px; border: 1px solid #21262d; padding: 8px; display: flex; flex-direction: column; position: relative; }
-        .image-box { position: relative; width: 100%; aspect-ratio: 1 / 1; border-radius: 10px; overflow: hidden; margin-bottom: 6px; background-color: #1c2128; display: flex; align-items: center; justify-content: center; }
-        .image-box img { width: 95%; height: 95%; object-fit: contain; }
-
-        .tag { align-self: flex-start; font-size: 0.6rem; font-weight: 700; padding: 2px 6px; border-radius: 6px; background-color: #21262d; color: #8b949e; text-transform: uppercase; margin-bottom: 4px; }
-        .item-name { font-size: 0.85rem; font-weight: 600; margin-bottom: 4px; }
-        .info-row { font-size: 0.75rem; display: flex; gap: 4px; }
-        .val-num { color: #f59e0b; font-weight: 700; }
-
-        .btn-plus { position: absolute; bottom: 8px; right: 8px; width: 28px; height: 28px; border-radius: 8px; background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.15); color: #fff; display: flex; align-items: center; justify-content: center; cursor: pointer; backdrop-filter: blur(4px); }
-        .btn-plus:hover { background: #6366f1; }
-
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(8px); display: none; justify-content: center; align-items: center; z-index: 1000; padding: 16px; opacity: 0; transition: opacity 0.3s ease; }
-        .modal-overlay.active { display: flex; opacity: 1; }
-        .modal-card { background: #161b22; border-radius: 20px; border: 1px solid #30363d; width: 100%; max-width: 400px; padding: 20px; }
-        .input-field { width: 100%; background: #0d1117; border: 1px solid #30363d; border-radius: 10px; padding: 10px; color: #fff; margin-bottom: 10px; outline: none; }
-        .btn-submit { width: 100%; background: #6366f1; color: white; border: none; padding: 10px; border-radius: 10px; font-weight: 600; cursor: pointer; }
-        .btn-submit:disabled { background: #373e47; cursor: not-allowed; }
-        .comments-list { background: #0d1117; border: 1px solid #21262d; border-radius: 12px; height: 150px; overflow-y: auto; padding: 10px; margin-bottom: 15px; display: flex; flex-direction: column; gap: 8px; }
-        .comment-item { background: #161b22; padding: 8px; border-radius: 8px; font-size: 0.75rem; border: 1px solid #252a32; }
-
-        /* WELCOME SCREEN OVERLAY */
-        .welcome-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #0a0d12; z-index: 2000; display: flex; flex-direction: column; justify-content: space-between; align-items: center; padding: 24px 16px; transition: transform 0.8s cubic-bezier(0.6, -0.28, 0.735, 0.04), opacity 0.6s ease; }
-        .welcome-overlay.drop-out { transform: translateY(110vh) rotate(12deg); opacity: 0; pointer-events: none; }
-        
-        .welcome-img-container { flex: 1; width: 100%; max-width: 450px; display: flex; align-items: center; justify-content: center; overflow: hidden; border-radius: 16px; margin-bottom: 20px; }
-        .welcome-img-container img { width: 100%; height: 100%; object-fit: contain; }
-        
-        .btn-continue { width: 100%; max-width: 450px; padding: 14px 20px; border-radius: 14px; border: none; background: #6366f1; color: #ffffff; font-size: 1rem; font-weight: 700; cursor: pointer; transition: background 0.3s ease, transform 0.2s ease; box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3); }
-        .btn-continue:hover { background: #4f46e5; }
-        .btn-continue:active { transform: scale(0.98); }
-
-        /* OFF-CANVAS SIDE MENU */
-        .side-menu-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(4px); z-index: 1500; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s ease; }
-        .side-menu-overlay.active { opacity: 1; visibility: visible; }
-
-        .side-menu { position: fixed; top: 0; right: -300px; width: 280px; height: 100%; background-color: #161b22; border-left: 1px solid #21262d; z-index: 1501; padding: 20px; display: flex; flex-direction: column; transition: right 0.3s ease; box-shadow: -5px 0 25px rgba(0,0,0,0.5); }
-        .side-menu.active { right: 0; }
-
-        .menu-header { display: flex; justify-content: space-between; align-items: center; padding-bottom: 16px; border-bottom: 1px solid #21262d; margin-bottom: 20px; }
-        .menu-title { font-size: 1.1rem; font-weight: 700; color: #fff; }
-        .btn-close-menu { background: none; border: none; color: #8b949e; font-size: 1.4rem; cursor: pointer; }
-
-        .setting-item { display: flex; flex-direction: column; gap: 10px; background: #0d1117; padding: 14px; border-radius: 12px; border: 1px solid #21262d; }
-        .setting-label { font-size: 0.85rem; font-weight: 600; color: #c9d1d9; line-height: 1.3; }
-        
-        .toggle-group { display: flex; gap: 8px; background: #161b22; padding: 4px; border-radius: 10px; }
-        .btn-toggle { flex: 1; padding: 6px 12px; border: none; border-radius: 8px; font-size: 0.8rem; font-weight: 600; background: transparent; color: #8b949e; cursor: pointer; transition: 0.3s; }
-        .btn-toggle.active { background: #6366f1; color: #fff; }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <!-- WELCOME SCREEN OVERLAY -->
+    <!-- WELCOME OVERLAY -->
     <div class="welcome-overlay" id="welcomeOverlay">
         <div class="welcome-img-container">
             <img src="https://i.postimg.cc/FsSLQZSp/received-1332431571989845.jpg" alt="Welcome Image">
@@ -95,7 +18,7 @@
         <button class="btn-continue" id="btnContinue">Continue to Web</button>
     </div>
 
-    <!-- OFF-CANVAS SIDE MENU -->
+    <!-- SIDE MENU -->
     <div class="side-menu-overlay" id="menuOverlay"></div>
     <div class="side-menu" id="sideMenu">
         <div class="menu-header">
@@ -125,7 +48,6 @@
         <input type="text" class="search-input" id="searchBar" placeholder="Search item name...">
     </div>
 
-    <!-- Filter Buttons -->
     <div class="categories" id="filterContainer">
         <button class="btn-filter active-all" data-filter="ALL">All Items</button>
         <button class="btn-filter" data-filter="KATANA">Katana</button>
@@ -141,14 +63,13 @@
 
     <div class="section-title" id="sectionTitle">All Items</div>
 
-    <!-- Item Grid -->
     <div class="item-grid" id="itemGrid">
         <div class="item-card" data-category="KATANA">
             <div class="image-box"><img src="https://i.postimg.cc/fLHT19kM/Screenshot-2026-0816-134912.jpg" alt="Cosmo Katana"></div>
             <span class="tag">KATANA</span>
             <div class="item-name">Cosmo Katana</div>
             <div class="info-row"><span>Value:</span> <span class="val-num">10.000</span></div>
-            <button class="btn-plus" data-name="Cosmo Katana" data-value="10.000" data-img="https://i.postimg.cc/fLHT19kM/Screenshot-2026-0816-134912.jpg"><i class="bi bi-plus-lg"></i></button>
+            <button class="btn-plus" onclick="openModal('Cosmo Katana', '10.000', 'https://i.postimg.cc/fLHT19kM/Screenshot-2026-0816-134912.jpg')"><i class="bi bi-plus-lg"></i></button>
         </div>
         
         <div class="item-card" data-category="STYLE">
@@ -156,7 +77,7 @@
             <span class="tag">STYLE</span>
             <div class="item-name">Style Ninja</div>
             <div class="info-row"><span>Value:</span> <span class="val-num">100</span></div>
-            <button class="btn-plus" data-name="Style Ninja" data-value="100" data-img="https://i.postimg.cc/7hGGVVX6/1786863889127.png"><i class="bi bi-plus-lg"></i></button>
+            <button class="btn-plus" onclick="openModal('Style Ninja', '100', 'https://i.postimg.cc/7hGGVVX6/1786863889127.png')"><i class="bi bi-plus-lg"></i></button>
         </div>
 
         <div class="item-card" data-category="NAIL">
@@ -164,7 +85,7 @@
             <span class="tag">NAIL</span>
             <div class="item-name">Icy</div>
             <div class="info-row"><span>Value:</span> <span class="val-num">3.000</span></div>
-            <button class="btn-plus" data-name="Icy" data-value="3.000" data-img="https://i.postimg.cc/5Nbx4pdL/1786861203962.png"><i class="bi bi-plus-lg"></i></button>
+            <button class="btn-plus" onclick="openModal('Icy', '3.000', 'https://i.postimg.cc/5Nbx4pdL/1786861203962.png')"><i class="bi bi-plus-lg"></i></button>
         </div>
 
         <div class="item-card" data-category="SHOES">
@@ -172,7 +93,7 @@
             <span class="tag">SHOES</span>
             <div class="item-name">Void Skull</div>
             <div class="info-row"><span>Value:</span> <span class="val-num">600</span></div>
-            <button class="btn-plus" data-name="Void Skull" data-value="600" data-img="https://i.postimg.cc/NjGf4Ddb/1786861234119.png"><i class="bi bi-plus-lg"></i></button>
+            <button class="btn-plus" onclick="openModal('Void Skull', '600', 'https://i.postimg.cc/NjGf4Ddb/1786861234119.png')"><i class="bi bi-plus-lg"></i></button>
         </div>
 
         <div class="item-card" data-category="KATANA">
@@ -180,7 +101,7 @@
             <span class="tag">KATANA</span>
             <div class="item-name">Viper Bite Katana</div>
             <div class="info-row"><span>Value:</span> <span class="val-num">150</span></div>
-            <button class="btn-plus" data-name="Viper Bite Katana" data-value="150" data-img="https://i.postimg.cc/mkQ6v9yk/1786936464053.png"><i class="bi bi-plus-lg"></i></button>
+            <button class="btn-plus" onclick="openModal('Viper Bite Katana', '150', 'https://i.postimg.cc/mkQ6v9yk/1786936464053.png')"><i class="bi bi-plus-lg"></i></button>
         </div>
 
         <div class="item-card" data-category="OTHER">
@@ -188,7 +109,7 @@
             <span class="tag">Other Weapons</span>
             <div class="item-name">Dash Dagger</div>
             <div class="info-row"><span>Value:</span> <span class="val-num">1.000</span></div>
-            <button class="btn-plus" data-name="Dash Dagger" data-value="1.000" data-img="https://i.postimg.cc/DwY5Y5KK/1786936703054.png"><i class="bi bi-plus-lg"></i></button>
+            <button class="btn-plus" onclick="openModal('Dash Dagger', '1.000', 'https://i.postimg.cc/DwY5Y5KK/1786936703054.png')"><i class="bi bi-plus-lg"></i></button>
         </div>
 
         <div class="item-card" data-category="OTHER">
@@ -196,11 +117,10 @@
             <span class="tag">Other Weapons</span>
             <div class="item-name">Demon Scythe</div>
             <div class="info-row"><span>Value:</span> <span class="val-num">5.000</span></div>
-            <button class="btn-plus" data-name="Demon Scythe" data-value="5.000" data-img="https://i.postimg.cc/kXTyBwGD/1786936979316.png"><i class="bi bi-plus-lg"></i></button>
+            <button class="btn-plus" onclick="openModal('Demon Scythe', '5.000', 'https://i.postimg.cc/kXTyBwGD/1786936979316.png')"><i class="bi bi-plus-lg"></i></button>
         </div>
     </div>
 
-    <!-- Modal Comment -->
     <div class="modal-overlay" id="modalOverlay">
         <div class="modal-card">
             <div class="modal-img-box" style="height:150px; display:flex; justify-content:center; align-items:center; background:#1c2128; border-radius:12px; margin-bottom:15px;">
@@ -210,123 +130,14 @@
             <div style="font-size:0.85rem; color:#8b949e; margin-bottom:15px;">Value: <span id="modalValue" style="color:#f59e0b; font-weight:700;"></span></div>
 
             <textarea id="commentInput" class="input-field" placeholder="Write a comment..." rows="2"></textarea>
-            <button class="btn-submit" id="submitBtn">Post Comment</button>
+            <button class="btn-submit" id="submitBtn" onclick="addComment()">Post Comment</button>
 
             <div style="font-size:0.9rem; font-weight:700; margin:20px 0 10px;">Comments</div>
             <div class="comments-list" id="commentsList"></div>
         </div>
     </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            let currentItemKey = "";
-            let cooldownTimer = null;
-
-            // --- WELCOME SCREEN ---
-            const welcomeOverlay = document.getElementById('welcomeOverlay');
-            const btnContinue = document.getElementById('btnContinue');
-            const skipIntro = localStorage.getItem('skip_intro_screen') === 'true';
-
-            if (skipIntro && welcomeOverlay) {
-                welcomeOverlay.style.display = 'none';
-            }
-
-            btnContinue.addEventListener('click', () => {
-                welcomeOverlay.classList.add('drop-out');
-                setTimeout(() => { welcomeOverlay.style.display = 'none'; }, 800);
-            });
-
-            // --- SIDE MENU ---
-            const sideMenu = document.getElementById('sideMenu');
-            const menuOverlay = document.getElementById('menuOverlay');
-            const btnOpenMenu = document.getElementById('btnOpenMenu');
-            const btnCloseMenu = document.getElementById('btnCloseMenu');
-            const btnSkipYes = document.getElementById('btnSkipYes');
-            const btnSkipNo = document.getElementById('btnSkipNo');
-
-            function openMenu() {
-                sideMenu.classList.add('active');
-                menuOverlay.classList.add('active');
-            }
-
-            function closeMenu() {
-                sideMenu.classList.remove('active');
-                menuOverlay.classList.remove('active');
-            }
-
-            btnOpenMenu.addEventListener('click', openMenu);
-            btnCloseMenu.addEventListener('click', closeMenu);
-            menuOverlay.addEventListener('click', closeMenu);
-
-            function updateMenuUI(skip) {
-                if (skip) {
-                    btnSkipYes.classList.add('active');
-                    btnSkipNo.classList.remove('active');
-                } else {
-                    btnSkipNo.classList.add('active');
-                    btnSkipYes.classList.remove('active');
-                }
-            }
-
-            btnSkipYes.addEventListener('click', () => {
-                localStorage.setItem('skip_intro_screen', 'true');
-                updateMenuUI(true);
-            });
-
-            btnSkipNo.addEventListener('click', () => {
-                localStorage.setItem('skip_intro_screen', 'false');
-                updateMenuUI(false);
-            });
-
-            updateMenuUI(skipIntro);
-
-            // --- FILTER & SEARCH ---
-            const filterBtns = document.querySelectorAll('.btn-filter');
-            const items = document.querySelectorAll('.item-card');
-            const sectionTitle = document.getElementById('sectionTitle');
-            const searchBar = document.getElementById('searchBar');
-
-            filterBtns.forEach(btn => {
-                btn.addEventListener('click', () => {
-                    filterBtns.forEach(b => b.classList.remove('active-all'));
-                    btn.classList.add('active-all');
-                    sectionTitle.textContent = btn.textContent;
-                    filterItems();
-                });
-            });
-
-            searchBar.addEventListener('input', filterItems);
-
-            function filterItems() {
-                const activeFilter = document.querySelector('.btn-filter.active-all').getAttribute('data-filter');
-                const searchText = searchBar.value.toLowerCase().trim();
-
-                items.forEach(item => {
-                    const category = item.getAttribute('data-category');
-                    const itemName = item.querySelector('.item-name').textContent.toLowerCase();
-
-                    const matchesCategory = (activeFilter === 'ALL' || category === activeFilter);
-                    const matchesSearch = itemName.includes(searchText);
-
-                    if (matchesCategory && matchesSearch) {
-                        item.style.display = 'flex';
-                    } else {
-                        item.style.display = 'none';
-                    }
-                });
-            }
-
-            // --- MODAL & COMMENTS ---
-            const modalOverlay = document.getElementById('modalOverlay');
-            const submitBtn = document.getElementById('submitBtn');
-
-            document.querySelectorAll('.btn-plus').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    const name = btn.getAttribute('data-name');
-                    const value = btn.getAttribute('data-value');
-                    const img = btn.getAttribute('data-img');
-                    openModal(name, value, img);
-                });
-            });
-
-            
+    <script src="script.js"></script>
+</body>
+                                                          </html>
+                                                          
